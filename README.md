@@ -1,9 +1,21 @@
 # Ra-07H_LoRa_868
 
+N.B
+
+Peer to Peer LoRa with asr6501 is not possible, it is designed for only LoRaWan.
+
+# Steps to send data
+
+1. join
+
+AT+CJOIN=1,0,8,8
+
+2.
+
 
 Ra-07H
 
-# Settings
+## Settings
 
 COM9
 
@@ -11,76 +23,40 @@ Default: 115200
 
 ---
 
-AT
+## Join Mode
 
-ASR6501/ASR6502 AT Command 
-
-manufacturer identification
-```
-AT+CGMI?
-```
-
-model identification
-```
-AT+CGMM?
-```
-
-revision identification
-```
-AT+CGMR?
-```
-
-product serial number identification
-```
-AT+CGSN?
-```
-
-baud rate on UART interface
-```
-AT+CGBR?
-```
-
-Set/Read Join Mode +CJOINMODE
+0 ：OTAA
+1：ABP
 ```
 AT+CJOINMODE?
 ```
 
-Set/Read DevEUI +CDEVEUI
+## Join
+
+0 ：OTAA
+1：ABP
 ```
-AT+CDEVEUI?
+AT+CJOIN?
+
+AT+CJOIN=1,0,8,8
+
+//example
+ASR6501:~# AT+CJOIN?
++CJOIN:0,0,8,8
+OK
+
 ```
 
-Set/Read DevAddr +CDEVADDR
-```
-AT+CDEVADDR?
-```
+## Send/Receive
 
-Set Frequency Band Mask +CFREQBANDMASK
-```
-AT+CFREQBANDMASK?
-```
+The AT+DTRX command can only be used after joining the LoraWAN network.
 
-Set/Read Upload/Download Same/Different Frequency +CULDLMODE
-```
-AT+CULDLMODE?
-```
+See notice at the bottom of the command description.
 
-Set/Read Class +CCLASS
-```
-AT+CCLASS?
-```
-
-Inquire the Battery level of Device Node +CBL
-```
-AT+CBL?
-```
-
-Inquire Device Current Status +CSTATUS
-```
-AT+CSTATUS?
-```
+Notice: It is need to first join into the network, then send data later.
 
 Send/Receive +DTRX
+
 ```
 AT+DTRX=?
 
@@ -91,44 +67,19 @@ OK+SENT:01
 OK+RECV:02,01,00
 ```
 
-Receive Data +DRX
-```
-AT+DRX?
-```
+AT+CTX=868123000,0,22
+AT+CRX=868123000,0
 
-```
-AT+CRSSI FREQBANDIDX?
-```
+## Reboot
 
-Sets or reads the receive window parameters +CRXP
-```
-AT+CRXP?
-
-//example
-ASR6501:~# AT+CRXP?
-+CRXP:0,0,869525000
-OK
-
-```
-
-Restart Module +IREBOOT
-```
 0 ：Restart the communication module immediately
 1 ：Wait for the wireless frame currently being sent in the
 
+```
 AT+IREBOOT=0
 ```
 
-Setting the Log Level +ILOGLVL
-```
-AT+ILOGLVL?
-```
-
-```
-
-```
-
-# Sleep
+## Sleep
 
 AT+CSLEEP=?
 
@@ -207,6 +158,6 @@ All the 13 channels are separated by 2.16 MHz with respect to the adjacent chann
 
 Links
 - [LoRa Bands](https://www.rfwireless-world.com/Tutorials/LoRa-frequency-bands.html)
-
+- [P2P not supported](https://forum.m5stack.com/topic/3746/lora-module-asr6501-with-arduino/10)
 
 
